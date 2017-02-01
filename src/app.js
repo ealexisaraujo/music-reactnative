@@ -11,38 +11,24 @@ import {
   AppRegistry,
   StyleSheet,
   View,
+  Platform
 } from 'react-native';
 
-import ArtisList from './ArtistList.js'
-import { getArtist } from './api-client.js'
+import {Scene, Router} from 'react-native-router-flux';
+import HomeView from './HomeView'
+import ArtistDetailView from './ArtistDetailView'
 
-export default class AwesomeProject extends Component {
-  state = {
-    artist: []
-  }
-
-  componentDidMount(){
-    getArtist()
-    .then((data) => this.setState({artist: data}))
-  }
-
+class AwesomeProject extends React.Component {
   render() {
-    const artists = this.state.artist
+    const isAndroid = Platform.OS === 'android'
 
-    return (
-      <View style={styles.container}>
-      <ArtisList    artists={artists}/>
-      </View>
-    );
+    return <Router>
+      <Scene key="root">
+        <Scene key="home" component={HomeView} hideNavBar/>
+        <Scene key="artistDetail" component={ArtistDetailView} hideNavBar={isAndroid} />
+      </Scene>
+    </Router>
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'lightgray',
-    paddingTop: 50,
-  },
-});
 
 AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
