@@ -14,17 +14,20 @@ import {
 } from 'react-native';
 
 import ArtisList from './ArtistList.js'
+import { getArtist } from './api-client.js'
 
 export default class AwesomeProject extends Component {
+  state = {
+    artist: []
+  }
+
+  componentDidMount(){
+    getArtist()
+    .then((data) => this.setState({artist: data}))
+  }
 
   render() {
-        const artist = {
-      image : 'https://static.platzi.com/media/files/bowie_a927fdf3-b321-4a5c-99ca-239cc86c57bc.png',
-      name : 'David Bowie',
-      likes : 200,
-      comments : 140,
-    }
-    const artists = Array(500).fill(artist);
+    const artists = this.state.artist
 
     return (
       <View style={styles.container}>

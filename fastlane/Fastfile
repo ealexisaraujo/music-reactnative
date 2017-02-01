@@ -32,7 +32,12 @@ platform :ios do
     # match(type: "appstore")
     cert
     sigh
-    gym(scheme: "AwesomeProject")
+    gym(
+    project: './ios/AwesomeProject.xcodeproj',
+    scheme: "AwesomeProject")
+    increment_build_number(
+    xcodeproj: './ios/AwesomeProject.xcodeproj',
+    build_number: latest_testflight_build_number + 1,)
     ENV["DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS"] = "-t DAV"
     testflight  
 
