@@ -10,7 +10,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  Text
+  Text,
+  Button
 } from 'react-native';
 
 import FBSDK, {
@@ -19,18 +20,53 @@ import FBSDK, {
 }  from 'react-native-fbsdk'
 
 import {Actions} from 'react-native-router-flux'
+import * as firebase from "firebase";
+
+const config = {
+    apiKey: "AIzaSyDAMDNvHf69J6vVTE3zS6DiyZIUMs6Vct8",
+    authDomain: "awesomeproject-43813.firebaseapp.com",
+    databaseURL: "https://awesomeproject-43813.firebaseio.com",
+    storageBucket: "awesomeproject-43813.appspot.com",
+    messagingSenderId: "88786821800"
+  };
+  firebase.initializeApp(config);
+
+  const { FacebookAuthProvider } = firebase.auth
+  const firebaseAuth = firebase.auth()
 
 export default class LoginView extends Component {
+  state = {
+    credential: null
+  }
+
+  componentWillMount(){
+    this.authenticateUser()
+  }
+
+  authenticateUser = () => {
+   AccessToken.getCurrentAccessToken().then((data) => {
+        const { accessToken } = (data) 
+        const credential = FacebookAuthProvider.credential(accessToken)
+        firebaseAuth.signInWithCredential(credential).then((credentials) => {
+          Actions.root()
+        }, (error) => {
+          console.log("Sign In Error", error);
+        })
+      })
+    }
+
   handleLoginfinished = (error, result) => {
   if (error) {
     console.error(error)
   } else if (result.isCancelled) {
     alert("login is cancelled.");
   } else {
-    AccessToken.getCurrentAccessToken().then(() => {
-      Actions.root()
-    })
+      this.authenticateUser()
   }
+}
+
+handleButtonPress = () => {
+  Actions.root()
 }
  
   render() {
@@ -59,6 +95,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     marginBottom: 20,
+
   }
 });
 

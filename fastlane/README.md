@@ -11,6 +11,11 @@ sudo gem install fastlane
 fastlane ios test
 ```
 Runs all the tests
+### ios bump
+```
+fastlane ios bump
+```
+Increment the app's build number without committing the changes. Returns a string of the new, bumped version.
 ### ios beta
 ```
 fastlane ios beta
