@@ -45,6 +45,9 @@ export default class LoginView extends Component {
 
   authenticateUser = () => {
    AccessToken.getCurrentAccessToken().then((data) => {
+    if (!data){
+      return
+    }
         const { accessToken } = (data) 
         const credential = FacebookAuthProvider.credential(accessToken)
         firebaseAuth.signInWithCredential(credential).then((credentials) => {
