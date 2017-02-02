@@ -18,9 +18,20 @@ import FBSDK, {
   AccessToken
 }  from 'react-native-fbsdk'
 
-
+import {Actions} from 'react-native-router-flux'
 
 export default class LoginView extends Component {
+  handleLoginfinished = (error, result) => {
+  if (error) {
+    console.error(error)
+  } else if (result.isCancelled) {
+    alert("login is cancelled.");
+  } else {
+    AccessToken.getCurrentAccessToken().then(() => {
+      Actions.root()
+    })
+  }
+}
  
   render() {
     return (
@@ -28,7 +39,10 @@ export default class LoginView extends Component {
         <Text style={styles.welcome}>
         Bienvenido
         </Text>
-
+          <LoginButton
+          readPermissions={['public_profile', 'email']}
+          onLoginFinished={this.handleLoginfinished}
+          onLogoutFinished={() => alert("logout.")}/>
       </View>
     );
   }
@@ -38,8 +52,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'lightgray',
-    paddingTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
+  welcome:{
+    fontSize: 24,
+    fontWeight: '600',
+    marginBottom: 20,
+  }
 });
 
 
