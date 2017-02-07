@@ -7,9 +7,9 @@ function getArtist()
     .then(response => response.json())
     .then(data => data.topartists.artist)
     .then(artist => artist.map(artist => ({
+            id: artist.mbid,
             name: artist.name,
             image: artist.image[3]['#text'],
-            likes: 200,
             comments: 140,
     })))
 }

@@ -20,19 +20,12 @@ import FBSDK, {
 }  from 'react-native-fbsdk'
 
 import {Actions} from 'react-native-router-flux'
-import * as firebase from "firebase";
 
-const config = {
-    apiKey: "AIzaSyDAMDNvHf69J6vVTE3zS6DiyZIUMs6Vct8",
-    authDomain: "awesomeproject-43813.firebaseapp.com",
-    databaseURL: "https://awesomeproject-43813.firebaseio.com",
-    storageBucket: "awesomeproject-43813.appspot.com",
-    messagingSenderId: "88786821800"
-  };
-  firebase.initializeApp(config);
+import firebase, { 
+  firebaseAuth 
+} from './firebase.js'
 
   const { FacebookAuthProvider } = firebase.auth
-  const firebaseAuth = firebase.auth()
 
 export default class LoginView extends Component {
   state = {
