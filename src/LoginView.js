@@ -11,7 +11,8 @@ import {
   StyleSheet,
   View,
   Text,
-  Button
+  Button,
+  Image
 } from 'react-native';
 
 import FBSDK, {
@@ -67,15 +68,16 @@ handleButtonPress = () => {
  
   render() {
     return (
-      <View style={styles.container}>
+      <Image source={require('./background.jpg')} style={styles.container}>
         <Text style={styles.welcome}>
         Bienvenido
         </Text>
+        <Image source={require('./logo.png')} style={styles.logo} />
           <LoginButton
           readPermissions={['public_profile', 'email']}
-          onLoginFinished={this.handleLoginfinished}
-          onLogoutFinished={() => alert("logout.")}/>
-      </View>
+          onLoginFinished={this.handleLoginfinished} />
+         {/* onLogoutFinished={() => alert("logout.")}/>*/}
+      </Image>
     );
   }
 }
@@ -83,15 +85,23 @@ handleButtonPress = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: null,
+    height: null,
     backgroundColor: 'lightgray',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  logo: {
+      width: 150,
+      height:150,
+      marginBottom: 15,
   },
   welcome:{
     fontSize: 24,
     fontWeight: '600',
     marginBottom: 20,
-
+    backgroundColor: 'transparent',
+    color: 'white'
   }
 });
 
