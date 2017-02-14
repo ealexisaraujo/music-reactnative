@@ -72,7 +72,6 @@ handleChangeText = (text) => this.setState({text})
 
         <View style={styles.container}>
         <ArtistBox    artist={artist}/>
-        <Text style={styles.header}>Comentarios</Text>
         <KeyboardAwareView animated={true}>
         <CommentList comments={comments} />
               <View style={styles.inputContainer}>

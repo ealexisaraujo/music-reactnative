@@ -21,13 +21,13 @@ import ArtistDetailView from './ArtistDetailView'
 
 class AwesomeProject extends React.Component {
   render() {
-    const isAndroid = Platform.OS === 'android'
+   /* const isAndroid = Platform.OS === 'android'*/
 
     return <Router>
       <Scene key="login" component={LoginView} hideNavBar/>
       <Scene key="root">
         <Scene key="home" component={HomeView} hideNavBar/>
-        <Scene key="artistDetail" component={ArtistDetailView} hideNavBar={isAndroid} />
+        <Scene key="artistDetail" component={ArtistDetailView} title={'Comentarios'} hideNavBar={false} />
       </Scene>
     </Router>
   }
