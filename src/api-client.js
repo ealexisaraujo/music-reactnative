@@ -1,4 +1,4 @@
-const URL = 'https://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=spain&api_key=7306e3dc35bee44b0a74e673eb28ff3d&format=json'
+const URL = 'https://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=mexico&api_key=7306e3dc35bee44b0a74e673eb28ff3d&format=json'
 
 
 function getArtist()
