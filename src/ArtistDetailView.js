@@ -45,20 +45,36 @@ addComment = (data) => {
 
 hanldeSend = () => {
   const {text} = this.state
-  const { uid, photoURL } = firebaseAuth.currentUser
+  const { uid, photoURL, displayName } = firebaseAuth.currentUser
+  const idArtist = this.getArtistCantidadCommentRef()
   const artistCommentRef = this.getArtistCommentsRef()
   var newCommentRef = artistCommentRef.push();
   newCommentRef.set({
     text,
     userPhoto: photoURL,
-    uid
+    uid,
+    name: displayName,
   });
   this.setState({text: ''})
+
+  idArtist.transaction(function (totalComentarios) {
+    if (totalComentarios) {
+        totalComentarios.cantidadComentarios++
+    }
+    return totalComentarios || {
+        cantidadComentarios: 1
+    }
+  });
 }
 
   getArtistCommentsRef = () => {
     const {id} = this.props.artist
     return firebaseDatabase.ref(`comments/${id}`)
+  }
+
+  getArtistCantidadCommentRef =  () => {
+    const {id} = this.props.artist
+    return firebaseDatabase.ref(`artistCantidadComments/${id}`)
   }
 
 handleChangeText = (text) => this.setState({text})

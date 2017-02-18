@@ -49,7 +49,7 @@ render() {
       dataSource={this.state.dataSource}
       renderRow={(comment) => {
         return(
-            <Comment text={comment.text} avatar={comment.userPhoto}/>
+            <Comment text={comment.text} avatar={comment.userPhoto} name={comment.name}/>
           )
         }}
       />

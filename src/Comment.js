@@ -11,12 +11,19 @@ const AVATAR_SIZE = 32
 
 const Comment = (props) => 
 	<View style={styles.comment}>
-		{
-			props.avatar ?
-			<Image style={styles.avatar} source={{uri: props.avatar}}/> :
-			<Image style={styles.avatar} source={{uri: DEFAULT_AVATAR}}/>
-		}
-		<Text>{props.text}</Text>
+	<View style={styles.contentName}>
+			{
+				props.avatar ?
+				<Image style={styles.avatar} source={{uri: props.avatar}}/> :
+				<Image style={styles.avatar} source={{uri: DEFAULT_AVATAR}}/>
+			}
+			{
+				props.name ?
+				<Text style={styles.name}>{props.name}</Text> :
+				<Text style={styles.name}>Avatar de prueba</Text>
+			}
+		</View>
+		<Text style={styles.text}>{props.text}</Text>
 	</View>
 
 const styles = StyleSheet.create({
@@ -25,12 +32,20 @@ const styles = StyleSheet.create({
 		padding: 10,
 		margin: 5,
 		borderRadius: 5,
-		flexDirection: 'row',
-		alignItems: 'center',
+		flexDirection: 'column',
 	},
 	text: {
-		marginLeft: 10,
-		fontSize: 16
+		// marginLeft: 10,
+		fontSize: 16,
+	},
+	contentName: {
+		flexDirection: 'row',
+		flex: 1,
+		alignItems: 'flex-end',
+		marginBottom: 5
+	},
+	name: {
+		color: '#e74c3c',
 	},
 	avatar:{
 		width: AVATAR_SIZE,

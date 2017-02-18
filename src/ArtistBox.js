@@ -12,7 +12,9 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Share,
+  TouchableHiglight
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -22,11 +24,14 @@ export default class ArtistBox extends Component {
   
   state = {
     liked: false,
-    likeCount: 0
+    likeCount: 0,
+    cantidadComentarios:0,
+
   }
 
   componentWillMount() {
     const { uid } = firebaseAuth.currentUser
+    
     this.getArtistRef().on('value', snapshot => {
     const artist = snapshot.val()
     if(artist){
@@ -35,6 +40,15 @@ export default class ArtistBox extends Component {
           liked: artist.likes && artist.likes[uid]
         })
       }
+    })
+
+    this.getArtistCantidadCommentRef().on('value', snapshot =>{
+        const totalComentarios = snapshot.val()
+        if (totalComentarios) {
+            this.setState({
+                cantidadComentarios: totalComentarios.cantidadComentarios
+            })
+        }
     })
   }
 
@@ -46,6 +60,11 @@ export default class ArtistBox extends Component {
     const {id} = this.props.artist
     return firebaseDatabase.ref(`artist/${id}`)
   }
+
+  getArtistCantidadCommentRef = () => {
+      const {id} = this.props.artist
+      return firebaseDatabase.ref(`artistCantidadComments/${id}`)
+    }
 
   toggleLike = (liked) => {
     const { uid } = firebaseAuth.currentUser
@@ -72,6 +91,7 @@ export default class ArtistBox extends Component {
     });
   }
 
+
   render() {
     const {image, name, likes, comments} = this.props.artist
     const likeIcon = this.state.liked ?
@@ -79,6 +99,7 @@ export default class ArtistBox extends Component {
       <Icon name="ios-heart-outline" size={30} color="gray"/>
 
       const {likeCount} = this.state
+      const {cantidadComentarios} = this.state
     
     return (
       <View style={styles.artistBox}>
@@ -89,15 +110,14 @@ export default class ArtistBox extends Component {
             <View style={styles.iconContainer}>
             <TouchableOpacity onPress={this.handlePress}> 
               {likeIcon}
-            </TouchableOpacity> 
+            </TouchableOpacity>
               <Text style={styles.count}>{likeCount}</Text>
             </View>
             <View style={styles.iconContainer}>
               <Icon name="ios-chatboxes-outline" size={30} color="gray"/>
-              <Text style={styles.count}>{comments}</Text>
+              <Text style={styles.count}>{cantidadComentarios}</Text>
             </View>
           </View>
-          
         </View>
       </View>
     );
