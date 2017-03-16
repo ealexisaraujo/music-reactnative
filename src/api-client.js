@@ -8,6 +8,7 @@ function getArtist()
     .then(data => data.topartists.artist)
     .then(artist => artist.map(artist => ({
             id: artist.mbid,
+            url: artist.url,
             name: artist.name,
             image: artist.image[3]['#text'],
             comments: 140,

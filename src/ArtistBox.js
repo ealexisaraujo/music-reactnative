@@ -91,12 +91,28 @@ export default class ArtistBox extends Component {
     });
   }
 
+  shareArtist = () => {
+    const {name, url} = this.props.artist
+
+    Share.share({
+      message: `Èscucha a ${name}`,
+      url: url,
+      title: {name}
+    },{
+      dialogTitle: {name},
+      excludeActivityTypes: ['com.apple.UIKit.activity.PostToTwitter'],
+      tintColor: 'green'
+    })
+    .catch((error) => console.log(error.message));
+  }
+
 
   render() {
     const {image, name, likes, comments} = this.props.artist
     const likeIcon = this.state.liked ?
       <Icon name="ios-heart" size={30} color="#e74c3c"/> :
       <Icon name="ios-heart-outline" size={30} color="gray"/>
+
 
       const {likeCount} = this.state
       const {cantidadComentarios} = this.state
@@ -116,6 +132,11 @@ export default class ArtistBox extends Component {
             <View style={styles.iconContainer}>
               <Icon name="ios-chatboxes-outline" size={30} color="gray"/>
               <Text style={styles.count}>{cantidadComentarios}</Text>
+            </View>
+            <View style={styles.iconContainer}>
+              <TouchableOpacity style={styles.share} onPress={this.shareArtist}>
+              <Icon name="ios-share-outline" size={30} color="gray"/>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -148,6 +169,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  share:{
+    alignSelf: 'flex-end',
+    marginRight: 10,
   },
   name: {
     fontSize: 20,
